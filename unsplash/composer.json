@@ -1,0 +1,14 @@
+{
+	"name": "studioespresso/unsplash",
+	"description": "Unsplash integration for CraftCMS",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "Studio Espresso",
+			"homepage": "https://studioespresso.co"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}
