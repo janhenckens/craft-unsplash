@@ -40,7 +40,7 @@ class UnsplashController extends BaseController
     /**
      * Handle a request going to our plugin's index action URL, e.g.: actions/unsplash
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        $this->renderTemplate('Unsplash/_index');
     }
 }
