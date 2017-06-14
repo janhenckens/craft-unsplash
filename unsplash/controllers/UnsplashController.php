@@ -27,20 +27,37 @@
 
 namespace Craft;
 
+use Crew\Unsplash\HttpClient;
+use Crew\Unsplash\Photo;
+
 class UnsplashController extends BaseController
 {
 
-    /**
-     * @var    bool|array Allows anonymous access to this controller's actions.
-     * @access protected
-     */
     protected $allowAnonymous = array('actionIndex',
         );
 
-    /**
-     * Handle a request going to our plugin's index action URL, e.g.: actions/unsplash
-     */
+
     public function actionIndex() {
         $this->renderTemplate('Unsplash/_index');
+    }
+
+    public function actionPopular() {
+
+        if(craft()->cache->get('UnsplashPopular')) {
+
+
+            $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnsplashPopular'));
+        } else {
+            $this->setup();
+            $images = Photo::curated(1, 25);
+            craft()->cache->add('UnsplashPopular', array('images' => $images), (60*60*12));
+            $this->renderTemplate('Unsplash/_index', array('images' => $images));
+        }
+    }
+
+    private function setup() {
+        return HttpClient::init(array(
+            'applicationId'	=> craft()->config->get('apiKey', 'Unsplash'),
+        ));
     }
 }

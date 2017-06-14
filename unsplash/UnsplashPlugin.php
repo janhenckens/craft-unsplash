@@ -11,6 +11,8 @@
 
 namespace Craft;
 
+require 'vendor/autoload.php';
+
 class UnsplashPlugin extends BasePlugin
 {
 
@@ -52,7 +54,8 @@ class UnsplashPlugin extends BasePlugin
 
     public function registerCpRoutes() {
         return array(
-            'unsplash' => array( 'action' => 'Unsplash/index' )
+            'unsplash' => array( 'action' => 'Unsplash/index' ),
+            'unsplash/popular' => array( 'action' => 'Unsplash/popular' ),
         );
     }
 
@@ -73,9 +76,7 @@ class UnsplashPlugin extends BasePlugin
      * @return mixed
      */
     public function getSettingsHtml() {
-       return craft()->templates->render('unsplash/Unsplash_Settings', array(
-           'settings' => $this->getSettings()
-       ));
+
     }
 
     public function prepSettings($settings) {
