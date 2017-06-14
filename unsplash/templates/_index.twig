@@ -3,7 +3,7 @@
 
 {% set content %}
 
-        <div class="wrapper" id="splashing-images">
+    <div class="wrapper" id="splashing-images">
     {% for image in images %}
         {% set thumb = image.parameters.urls.thumb %}
         {% set download= image.parameters.links.download %}
@@ -12,7 +12,11 @@
                 <img class="splashing-thumbnail ms-item" src="{{ thumb }}">
             </a>
     {% endfor %}
-        </div>
+    </div>
+    <script type="text/javascript">
+        window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
+        window.csrfTokenValue = "{{ craft.request.getCsrfToken }}";
+    </script>
 
 
     {% set masonry %}
@@ -21,10 +25,17 @@
                 itemSelector: 'a.upload',
                 gutter: 5,
             });
+            $grid.imagesLoaded().progress( function() {
+                $grid.masonry('layout');
+            });
         });
     {% endset %}
+
     {% includeJs masonry %}
     {% includeJsResource "unsplash/js/jquery-3.2.1.min.js" %}
+    {% includeJsResource "unsplash/js/Unsplash_Script.js" %}
+    {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
+    {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}
     {% includeJsResource "unsplash/js/masonry.pkgd.min.js" %}
 {% endset %}
 

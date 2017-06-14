@@ -36,6 +36,33 @@ class UnsplashController extends BaseController
     protected $allowAnonymous = array('actionIndex',
         );
 
+    public function actionSave() {
+        if(!craft()->request->isAjaxRequest()) {
+            return false;
+        }
+
+        $path = new PathService();
+        $dir = $path->getTempPath();
+        if(!is_dir($dir)){ mkdir($dir); }
+
+        $payload = trim(stripslashes($_POST['source']));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $payload);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $picture = curl_exec($ch);
+        curl_close($ch);
+
+        $tmpImage = 'photo-' . rand() . '.jpg';
+        $tmp = $dir . $tmpImage;
+
+        $saved = file_put_contents($tmp, $picture);
+        echo json_encode($tmp);
+        craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', 1, true);
+        exit;
+    }
 
     public function actionIndex() {
         $this->renderTemplate('Unsplash/_index');
