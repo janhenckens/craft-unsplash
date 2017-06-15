@@ -9,12 +9,7 @@ random: { label: "Random"|t, url: url('unsplash/random')},
 {% set selectedTab = 'latest' %}
 
 {% set extraPageHeaderHtml %}
-    <div class="texticon search icon clearable">
-        <form method="get" action="/admin/unsplash/search">
-            <input class="text fullwidth" type="text" autocomplete="off" placeholder="Search" name="q">
-            <div class="clear hidden" title="Clear"></div>
-        </form>
-    </div>
+    {% include 'unsplash/components/_searchForm' %}
 {% endset %}
 
 {% set content %}
