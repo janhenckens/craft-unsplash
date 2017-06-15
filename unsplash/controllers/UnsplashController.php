@@ -71,8 +71,6 @@ class UnsplashController extends BaseController
     public function actionPopular() {
 
         if(craft()->cache->get('UnsplashPopular')) {
-
-
             $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnsplashPopular'));
         } else {
             $this->setup();
