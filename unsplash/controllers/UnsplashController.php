@@ -59,8 +59,8 @@ class UnsplashController extends BaseController
         $tmp = $dir . $tmpImage;
 
         $saved = file_put_contents($tmp, $picture);
-        echo json_encode($tmp);
-        craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', 1, true);
+        $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
+        craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', $settings->assetSource, true);
         exit;
     }
 
@@ -69,7 +69,6 @@ class UnsplashController extends BaseController
     }
 
     public function actionPopular() {
-
         if(craft()->cache->get('UnsplashPopular')) {
             $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnsplashPopular'));
         } else {
