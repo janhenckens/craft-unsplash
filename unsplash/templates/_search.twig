@@ -28,11 +28,20 @@ search: { label: "Search"|t, url: url('unsplash/search')},
 
     {{ results.pagination.total_results }} results found for {{ craft.request.getParam('q') }}.
     {% set currentPage =  craft.request.getParam('page') %}
+    {% if currentPage != 1 %}
+    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page=1">First</a> |
+    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage-1 }}">Previous</a>
 
-    {% for page in results.pagination.total_pages %}
-        {% if page != currentPage %}<a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ page }}">{% endif %}{{ page }} {% if page != currentPage %}</a>{% endif %}
+    {% endif %}
 
-    {% endfor %}
+
+
+  | Page {{ currentPage }} |
+
+    {% if currentPage != results.pagination.total_pages %}
+    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage+1 }}">Next</a> |
+    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ results.pagination.total_pages }}">Last</a>
+    {% endif %}
 
     <script type="text/javascript">
         window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
