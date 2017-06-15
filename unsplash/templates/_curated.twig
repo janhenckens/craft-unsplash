@@ -8,6 +8,10 @@
 } %}
 {% set selectedTab = 'curated' %}
 
+{% set extraPageHeaderHtml %}
+{% include 'unsplash/components/_searchForm' %}
+{% endset %}
+
 {% set content %}
     {% include 'unsplash/components/_images' %}
 {% endset %}

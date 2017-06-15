@@ -8,6 +8,10 @@ random: { label: "Random"|t, url: url('unsplash/random')},
 } %}
 {% set selectedTab = 'random' %}
 
+{% set extraPageHeaderHtml %}
+    {% include 'unsplash/components/_searchForm' %}
+{% endset %}
+
 {% set content %}
     {% include 'unsplash/components/_images' %}
 {% endset %}
