@@ -1,0 +1,56 @@
+{% extends '_layouts/cp' %}
+{% set title = "Unsplash"|t %}
+
+{% set tabs = {
+latest: { label: "Lastest"|t, url: url('unsplash') },
+curated: { label: "Curated"|t, url: url('unsplash/curated')},
+random: { label: "Random"|t, url: url('unsplash/random')},
+search: { label: "Search"|t, url: url('unsplash/search')},
+} %}
+{% set selectedTab = 'search' %}
+
+{% set extraPageHeaderHtml %}
+    <div class="texticon search icon clearable">
+        <form method="get" action="/admin/unsplash/search">
+            <input class="text fullwidth" type="text" autocomplete="off" placeholder="Search" name="q" {% if craft.request.getParam('q') %}value="{{ craft.request.getParam('q') }}"{% endif %}>
+            <div class="clear hidden" title="Clear"></div>
+        </form>
+    </div>
+{% endset %}
+
+{% set content %}
+    <div class="wrapper" id="splashing-images">
+        {% for image in images %}
+            {% set thumb = image.urls.thumb %}
+            {% set download= image.links.download %}
+            {% set author = image.user.name %}
+            <a href="" class="upload" data-source="{{ download }}" data-author="{{ author }}">
+                <img class="splashing-thumbnail ms-item" src="{{ thumb }}">
+            </a>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
+        window.csrfTokenValue = "{{ craft.request.getCsrfToken }}";
+    </script>
+
+
+    {% set masonry %}
+        $( document ).ready(function() {
+        var $grid = jQuery('#splashing-images').masonry({
+        itemSelector: 'a.upload',
+        gutter: 5,
+        });
+        $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+        });
+        });
+    {% endset %}
+
+    {% includeJs masonry %}
+    {% includeJsResource "unsplash/js/jquery-3.2.1.min.js" %}
+    {% includeJsResource "unsplash/js/Unsplash_Script.js" %}
+    {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
+    {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}
+    {% includeJsResource "unsplash/js/masonry.pkgd.min.js" %}
+{% endset %}

@@ -57,6 +57,7 @@ class UnsplashPlugin extends BasePlugin
             'unsplash' => array( 'action' => 'Unsplash/index' ),
             'unsplash/curated' => array( 'action' => 'Unsplash/curated' ),
             'unsplash/random' => array( 'action' => 'Unsplash/random' ),
+            'unsplash/search' => array( 'action' => 'Unsplash/search' ),
         );
     }
 

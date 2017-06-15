@@ -29,6 +29,7 @@ namespace Craft;
 
 use Crew\Unsplash\HttpClient;
 use Crew\Unsplash\Photo;
+use Crew\Unsplash\Search;
 
 class UnsplashController extends BaseController
 {
@@ -96,9 +97,19 @@ class UnsplashController extends BaseController
                     'count' => 25
                 )
             );
-            //craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60*12));
+            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60*12));
             $this->renderTemplate('Unsplash/_random', array('images' => $images));
         }
+    }
+
+    public function actionSearch() {
+        if(!craft()->request->getParam('q')) {
+            return false;
+        }
+        $query = craft()->request->getParam('q');
+        $this->setup();
+        $search = Search::photos($query, 1);
+        $this->renderTemplate('Unsplash/_search', array('images' => $search->getResults()));
     }
 
     private function setup() {
