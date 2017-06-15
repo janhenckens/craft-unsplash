@@ -106,10 +106,23 @@ class UnsplashController extends BaseController
         if(!craft()->request->getParam('q')) {
             return false;
         }
+
         $query = craft()->request->getParam('q');
-        $this->setup();
-        $search = Search::photos($query, 1);
-        $this->renderTemplate('Unsplash/_search', array('images' => $search->getResults()));
+        $page = craft()->request->getParam('page');
+
+        if(craft()->cache->get('UnsplashSearch-' . $query . '-' . $page )) {
+            $this->renderTemplate('Unsplash/_search', craft()->cache->get('UnsplashSearch-' . $query . '-' . $page ));
+        } else {
+            $this->setup();
+            $search = Search::photos($query, $page);
+            $data = [];
+            $data['images'] = $search->getResults();
+            $data['pagination']['total_pages'] = range(1, $search->getTotalPages());
+            $data['pagination']['total_results'] = $search->getTotal();
+            $data['pagination']['base'] = craft()->urlManager->createUrl('admin/unsplash/search');
+            craft()->cache->add('UnsplashSearch-' . $query . '-' . $page, array('results' => $data));
+            $this->renderTemplate('Unsplash/_search', array('results' => $data));
+        }
     }
 
     private function setup() {

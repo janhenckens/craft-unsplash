@@ -15,7 +15,7 @@ search: { label: "Search"|t, url: url('unsplash/search')},
 
 {% set content %}
     <div class="wrapper" id="splashing-images">
-        {% for image in images %}
+        {% for image in results.images %}
             {% set thumb = image.urls.thumb %}
             {% set download= image.links.download %}
             {% set author = image.user.name %}
@@ -24,6 +24,16 @@ search: { label: "Search"|t, url: url('unsplash/search')},
             </a>
         {% endfor %}
     </div>
+    <hr>
+
+    {{ results.pagination.total_results }} results found for {{ craft.request.getParam('q') }}.
+    {% set currentPage =  craft.request.getParam('page') %}
+
+    {% for page in results.pagination.total_pages %}
+        {% if page != currentPage %}<a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ page }}">{% endif %}{{ page }} {% if page != currentPage %}</a>{% endif %}
+
+    {% endfor %}
+
     <script type="text/javascript">
         window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
         window.csrfTokenValue = "{{ craft.request.getCsrfToken }}";
