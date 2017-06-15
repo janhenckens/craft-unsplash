@@ -30,16 +30,11 @@ search: { label: "Search"|t, url: url('unsplash/search')},
     {% set currentPage =  craft.request.getParam('page') %}
     {% if currentPage != 1 %}
     <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page=1">First</a> |
-    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage-1 }}">Previous</a>
-
+    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage-1 }}">Previous</a> |
     {% endif %}
-
-
-
-  | Page {{ currentPage }} |
-
+    Page {{ currentPage }}
     {% if currentPage != results.pagination.total_pages %}
-    <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage+1 }}">Next</a> |
+    | <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ currentPage+1 }}">Next</a> |
     <a href="{{ results.pagination.base }}?q={{ craft.request.getParam('q')}}&page={{ results.pagination.total_pages }}">Last</a>
     {% endif %}
 

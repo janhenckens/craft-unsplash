@@ -97,7 +97,7 @@ class UnsplashController extends BaseController
                     'count' => 25
                 )
             );
-            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60*12));
+            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*10));
             $this->renderTemplate('Unsplash/_random', array('images' => $images));
         }
     }
