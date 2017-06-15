@@ -1,0 +1,14 @@
+{% extends '_layouts/cp' %}
+{% set title = "Unsplash"|t %}
+
+{% set tabs = {
+    latest: { label: "Lastest"|t, url: url('unsplash') },
+    curated: { label: "Curated"|t, url: url('unsplash/curated')},
+    random: { label: "Random"|t, url: url('unsplash/random')},
+} %}
+{% set selectedTab = 'curated' %}
+
+{% set content %}
+    {% include 'unsplash/components/_images' %}
+{% endset %}
+

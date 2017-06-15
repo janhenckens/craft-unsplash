@@ -65,17 +65,39 @@ class UnsplashController extends BaseController
     }
 
     public function actionIndex() {
-        $this->renderTemplate('Unsplash/_index');
+        if(craft()->cache->get('UnplashLatest')) {
+            $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnplashLatest'));
+        } else {
+            $this->setup();
+            $images = Photo::all($page = 1, $per_page = 25, $orderby = 'latest');
+            craft()->cache->add('UnplashLatest', array('images' => $images), (60*60*12));
+            $this->renderTemplate('Unsplash/_index', array('images' => $images));
+        }
     }
 
-    public function actionPopular() {
-        if(craft()->cache->get('UnsplashPopular')) {
-            $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnsplashPopular'));
+    public function actionCurated() {
+        if(craft()->cache->get('UnsplashCurated')) {
+            $this->renderTemplate('Unsplash/_curated', craft()->cache->get('UnsplashCurated'));
         } else {
             $this->setup();
             $images = Photo::curated(1, 25);
-            craft()->cache->add('UnsplashPopular', array('images' => $images), (60*60*12));
-            $this->renderTemplate('Unsplash/_index', array('images' => $images));
+            craft()->cache->add('UnsplashCurated', array('images' => $images), (60*60*12));
+            $this->renderTemplate('Unsplash/_curated', array('images' => $images));
+        }
+    }
+
+    public function actionRandom() {
+        if(craft()->cache->get('UnsplashRandom')) {
+            $this->renderTemplate('Unsplash/_random', craft()->cache->get('UnsplashRandom'));
+        } else {
+            $this->setup();
+            $images = Photo::random(
+                array(
+                    'count' => 25
+                )
+            );
+            //craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60*12));
+            $this->renderTemplate('Unsplash/_random', array('images' => $images));
         }
     }
 
