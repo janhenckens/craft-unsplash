@@ -17,7 +17,7 @@ class UnsplashPlugin extends BasePlugin
 {
 
     public function getName() {
-         return Craft::t('Unsplash');
+         return Craft::t('Splashing Images');
     }
 
     public function getDescription() {
@@ -72,12 +72,17 @@ class UnsplashPlugin extends BasePlugin
         );
     }
 
+    public function onAfterInstall(){
+        craft()->request->redirect(UrlHelper::getCpUrl('settings/plugins/unsplash'));
+    }
+
     /**
      * Returns the HTML that displays your plugin’s settings.
      *
      * @return mixed
      */
     public function getSettingsHtml() {
+        $sourceOptions[] = array('label' => '---', 'value' => "");
         foreach (craft()->assetSources->getAllSources() as $source)
         {
             $sourceOptions[] = array('label' => $source->name, 'value' => $source->id);
