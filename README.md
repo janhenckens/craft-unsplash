@@ -2,7 +2,7 @@
 
 Unsplash integration for CraftCMS
 
-![Screenshot](resources/screenshots/screenshot_1.png)
+![Screenshot](unsplash/resources/screenshots/screenshot_1.png)
 
 ## Installation
 
