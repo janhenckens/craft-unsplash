@@ -31,6 +31,7 @@ jQuery(document).ready(function($) {
 
                 },
                 error: function(xhr, status, error) {
+                    image.LoadingOverlay("hide");
                     Craft.cp.displayError(Craft.t('Oops, something went wrong!'));
                 }
             });
