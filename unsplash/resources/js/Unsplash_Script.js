@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     var container = $('#splashing_images');
     $.LoadingOverlaySetup({
-        color           : "rgba(241,241,241,0.7)",
+        color           : "rgba(241,241,241,0.8)",
         maxSize         : "80px",
         minSize         : "20px",
         resizeInterval  : 0,
@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
             payload[window.csrfTokenName] = window.csrfTokenValue;
             $.ajax({
                 type: 'POST',
-                url: Craft.getActionUrl('unsplash/save'),
+                url: Craft.getActionUrl('unsplash/download/save'),
                 dataType: 'JSON',
                 data: payload,
                 beforeSend: function() {
