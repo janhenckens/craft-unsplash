@@ -59,7 +59,9 @@ class Unsplash_DownloadController extends BaseController
         $saved = file_put_contents($tmp, $picture);
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
         craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', $settings->assetSource, true);
+        
         exit;
+
     }
 
 }

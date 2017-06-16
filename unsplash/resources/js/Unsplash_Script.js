@@ -26,11 +26,12 @@ jQuery(document).ready(function($) {
                     image.LoadingOverlay("show");
                 },
                 success: function(response) {
-                    console.log(response);
                     image.LoadingOverlay("hide");
+                    Craft.cp.displayNotice(Craft.t('Image saved!'));
+
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
+                    Craft.cp.displayError(Craft.t('Oops, something went wrong!'));
                 }
             });
         };
