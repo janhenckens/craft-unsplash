@@ -22,13 +22,12 @@ Unsplash.com offers stunning photos, free for you to use wherever you want. The 
 
 Unsplash For Craft brings these amazing photos to your fingertips, right where you edit your content, in your dashboard. See the latest featured images or search Unsplash to find that perfect image you need for your newest post.
 
+Note: this plugin is not affiliated with unsplash.com.
+
 ## Configuring Unsplash
 
 Before you can use Unsplash for Craft, you have to configure at least 1 Assets source, so the plugin has a place to save your images to.
 
-## Using Unsplash
-
--Insert text here-
 
 ## Unsplash Roadmap
 
