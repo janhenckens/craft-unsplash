@@ -1,6 +1,10 @@
 {% import "_includes/forms" as forms %}
 
 
+{% if assetSources|length == 1 %}
+<p class="error">{{ 'No sources exist yet.'|t }}</p>
+
+{% else %}
 {{ forms.selectField({
     first:        true,
     label:        "Save images in"|t,
@@ -12,3 +16,5 @@
     options:      assetSources,
     errors:       settings.getErrors('assetSource')
 }) }}
+
+{% endif %}

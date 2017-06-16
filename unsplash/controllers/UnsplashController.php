@@ -37,35 +37,8 @@ class UnsplashController extends BaseController
     protected $allowAnonymous = array('actionIndex',
         );
 
-    public function actionSave() {
-        if(!craft()->request->isAjaxRequest()) {
-            return false;
-        }
-
-        $path = new PathService();
-        $dir = $path->getTempPath();
-        if(!is_dir($dir)){ mkdir($dir); }
-
-        $payload = trim(stripslashes($_POST['source']));
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $payload);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        $picture = curl_exec($ch);
-        curl_close($ch);
-
-        $tmpImage = 'photo-' . rand() . '.jpg';
-        $tmp = $dir . $tmpImage;
-
-        $saved = file_put_contents($tmp, $picture);
-        $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
-        craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', $settings->assetSource, true);
-        exit;
-    }
-
     public function actionIndex() {
+        $this->pluginIsConfigured();
         if(craft()->cache->get('UnplashLatest')) {
             $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnplashLatest'));
         } else {
@@ -77,6 +50,7 @@ class UnsplashController extends BaseController
     }
 
     public function actionCurated() {
+        $this->pluginIsConfigured();
         if(craft()->cache->get('UnsplashCurated')) {
             $this->renderTemplate('Unsplash/_curated', craft()->cache->get('UnsplashCurated'));
         } else {
@@ -88,6 +62,7 @@ class UnsplashController extends BaseController
     }
 
     public function actionRandom() {
+        $this->pluginIsConfigured();
         if(craft()->cache->get('UnsplashRandom')) {
             $this->renderTemplate('Unsplash/_random', craft()->cache->get('UnsplashRandom'));
         } else {
@@ -103,6 +78,7 @@ class UnsplashController extends BaseController
     }
 
     public function actionSearch() {
+        $this->pluginIsConfigured();
         if(!craft()->request->getParam('q')) {
             return false;
         }
@@ -124,6 +100,14 @@ class UnsplashController extends BaseController
             craft()->cache->add('UnsplashSearch-' . $query . '-' . $page, array('results' => $data));
             $this->renderTemplate('Unsplash/_search', array('results' => $data));
         }
+    }
+
+    private function pluginIsConfigured() {
+        $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
+        if($settings->assetSource) {
+            return true;
+        }
+        $this->renderTemplate('Unsplash/_noConfig');
     }
 
     private function setup() {
