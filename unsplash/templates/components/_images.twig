@@ -4,7 +4,7 @@
         {% set download= image.parameters.links.download %}
         {% set author = image.parameters.user.name %}
         <a href="" class="upload" data-source="{{ download }}" data-author="{{ author }}">
-            <img class="splashing-thumbnail ms-item" src="{{ thumb }}">
+            <img class="splashing-thumbnail ms-item" src="{{ thumb }}" alt="{{ author }}">
         </a>
     {% endfor %}
 </div>
