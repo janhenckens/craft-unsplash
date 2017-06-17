@@ -2,9 +2,9 @@
 {% set title = "Unsplash"|t %}
 
 {% set tabs = {
-latest: { label: "Lastest"|t, url: url('unsplash') },
-curated: { label: "Curated"|t, url: url('unsplash/curated')},
-random: { label: "Random"|t, url: url('unsplash/random')},
+    popular: { label: "Popular"|t, url: url('unsplash')},
+    latest: { label: "Last Added"|t, url: url('unsplash/latest') },
+    random: { label: "Random"|t, url: url('unsplash/random')},
 } %}
 {% set selectedTab = 'random' %}
 

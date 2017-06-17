@@ -55,7 +55,7 @@ class UnsplashPlugin extends BasePlugin
     public function registerCpRoutes() {
         return array(
             'unsplash' => array( 'action' => 'Unsplash/index' ),
-            'unsplash/curated' => array( 'action' => 'Unsplash/curated' ),
+            'unsplash/latest' => array( 'action' => 'Unsplash/latest' ),
             'unsplash/random' => array( 'action' => 'Unsplash/random' ),
             'unsplash/search' => array( 'action' => 'Unsplash/search' ),
         );
