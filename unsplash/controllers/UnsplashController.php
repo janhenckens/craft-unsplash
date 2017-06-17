@@ -113,6 +113,7 @@ class UnsplashController extends BaseController
     private function setup() {
         return HttpClient::init(array(
             'applicationId'	=> craft()->config->get('apiKey', 'Unsplash'),
+            'utmSource' => 'SplashingImages_CraftCMS',
         ));
     }
 }
