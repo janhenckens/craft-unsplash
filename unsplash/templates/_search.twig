@@ -46,13 +46,13 @@
 
     {% set masonry %}
         $( document ).ready(function() {
-        var $grid = jQuery('#splashing-images').masonry({
-        itemSelector: 'a.upload',
-        gutter: 5,
+            var $grid = jQuery('#splashing-images').masonry({
+            itemSelector: 'a.upload',
+            gutter: 5,
         });
         $grid.imagesLoaded().progress( function() {
-        $grid.masonry('layout');
-        });
+            $grid.masonry('layout');
+            });
         });
     {% endset %}
 

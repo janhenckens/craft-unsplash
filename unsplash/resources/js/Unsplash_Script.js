@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     var container = $('#splashing_images');
     $.LoadingOverlaySetup({
-        color           : "rgba(241,241,241,0.8)",
+        color           : "rgba(241,241,241,0.5)",
         maxSize         : "80px",
         minSize         : "20px",
         resizeInterval  : 0,

@@ -61,14 +61,9 @@ class UnsplashPlugin extends BasePlugin
         );
     }
 
-    /**
-     * Defines the attributes that model your plugin’s available settings.
-     *
-     * @return array
-     */
     protected function defineSettings() {
         return array(
-            'assetSource' => array(AttributeType::String, 'label' => 'Asset Souce', 'default' => ''),
+            'assetSource' => array(AttributeType::String, 'label' => 'Asset Source', 'default' => ''),
         );
     }
 
@@ -83,8 +78,7 @@ class UnsplashPlugin extends BasePlugin
      */
     public function getSettingsHtml() {
         $sourceOptions[] = array('label' => '---', 'value' => "");
-        foreach (craft()->assetSources->getAllSources() as $source)
-        {
+        foreach (craft()->assetSources->getAllSources() as $source) {
             $sourceOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
         return craft()->templates->render('unsplash/_settings', array(
