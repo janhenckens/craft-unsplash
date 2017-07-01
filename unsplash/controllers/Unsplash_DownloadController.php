@@ -43,7 +43,8 @@ class Unsplash_DownloadController extends BaseController
         $dir = $path->getTempPath();
         if(!is_dir($dir)){ mkdir($dir); }
 
-        $payload = trim(stripslashes($_POST['source']));
+        $payload = trim(stripslashes(craft()->request->getPost('source')));
+        $credit = craft()->request->getPost('author');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $payload);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -58,7 +59,7 @@ class Unsplash_DownloadController extends BaseController
 
         $saved = file_put_contents($tmp, $picture);
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
-        craft()->assets->insertFileByLocalPath($tmp, 'photo-' . rand() . '.jpg', $settings->assetSource, true);
+        craft()->assets->insertFileByLocalPath($tmp, 'Photo by ' . $credit . '.jpg', $settings->assetSource, true);
         // Delete the file we just uploaded from the tmp dir.
         if(file_exists($tmp)) {
             unlink($tmp);
