@@ -64,6 +64,8 @@ class UnsplashPlugin extends BasePlugin
     protected function defineSettings() {
         return array(
             'assetSource' => array(AttributeType::String, 'label' => 'Asset Source', 'default' => ''),
+            'creditsField' => array(AttributeType::String, 'label' => 'Credits Field', 'default' => ''),
+
         );
     }
 
@@ -77,12 +79,27 @@ class UnsplashPlugin extends BasePlugin
      * @return mixed
      */
     public function getSettingsHtml() {
+        $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
+
         $sourceOptions[] = array('label' => '---', 'value' => "");
         foreach (craft()->assetSources->getAllSources() as $source) {
             $sourceOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
+
+        $source = craft()->assetSources->getSourceById($settings->assetSource);
+        $fieldLayout = craft()->fields->getLayoutById($source->getAttribute('fieldLayoutId'));
+        $sourceFields[] = array('label' => '---', 'value' => "");
+        $textFields = [ 'PlainText' , 'RichText' ];
+        foreach ($fieldLayout->getFieldIds() as $field) {
+            $field = craft()->fields->getFieldById($field);
+            if(in_array($field->getFieldType()->getClassHandle(), $textFields  )) {
+                $sourceFields[$field->getAttribute('handle')] = $field->getAttribute('name');
+            };
+        }
+
         return craft()->templates->render('unsplash/_settings', array(
             'settings' => $this->getSettings(),
+            'sourceFields' => $sourceFields,
             'assetSources' => $sourceOptions,
         ));
     }

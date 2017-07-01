@@ -17,4 +17,16 @@
     errors:       settings.getErrors('assetSource')
 }) }}
 
+{{ forms.selectField({
+    first:        true,
+    label:        "Save image credits in"|t,
+    required:     true,
+    id:           'creditsField',
+    name:         'creditsField',
+    instructions: "Select a text field in which the photo credits will be saved"|t,
+    value:        settings.creditsField,
+    options:      sourceFields,
+    errors:       settings.getErrors('creditsField')
+}) }}
+
 {% endif %}
