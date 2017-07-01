@@ -85,16 +85,20 @@ class UnsplashPlugin extends BasePlugin
         foreach (craft()->assetSources->getAllSources() as $source) {
             $sourceOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
-
-        $source = craft()->assetSources->getSourceById($settings->assetSource);
-        $fieldLayout = craft()->fields->getLayoutById($source->getAttribute('fieldLayoutId'));
+        
         $sourceFields[] = array('label' => '---', 'value' => "");
-        $textFields = [ 'PlainText' , 'RichText' ];
-        foreach ($fieldLayout->getFieldIds() as $field) {
-            $field = craft()->fields->getFieldById($field);
-            if(in_array($field->getFieldType()->getClassHandle(), $textFields  )) {
-                $sourceFields[$field->getAttribute('handle')] = $field->getAttribute('name');
-            };
+
+        if($settings->assetSource) {
+
+            $source = craft()->assetSources->getSourceById($settings->assetSource);
+            $fieldLayout = craft()->fields->getLayoutById($source->getAttribute('fieldLayoutId'));
+            $textFields = [ 'PlainText' , 'RichText' ];
+            foreach ($fieldLayout->getFieldIds() as $field) {
+                $field = craft()->fields->getFieldById($field);
+                if(in_array($field->getFieldType()->getClassHandle(), $textFields  )) {
+                    $sourceFields[$field->getAttribute('handle')] = $field->getAttribute('name');
+                };
+            }
         }
 
         return craft()->templates->render('unsplash/_settings', array(
