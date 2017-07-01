@@ -29,7 +29,7 @@ class UnsplashPlugin extends BasePlugin
     }
 
     public function getReleaseFeedUrl() {
-        return 'https://raw.githubusercontent.com/studioespresso/unsplash/master/releases.json';
+        return 'https://raw.githubusercontent.com/studioespresso/craft-unsplash/master/releases.json';
     }
 
     public function getVersion() {
