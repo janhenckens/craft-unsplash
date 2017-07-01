@@ -18,9 +18,9 @@
 }) }}
 
 
-<h2>Credits field</h2>
+<h2>{{ 'Credits'|t }}</h2>
 {% if sourceFields|length == 1 %}
-    <p class="error">{{ 'No fields add to assets in this Assets Source. '|t }}</p>
+    <p class="error">{{ 'No fields add to assets in this Assets Source.'|t }}</p>
     <p class="error">{{ 'Add a text field or a rich text field to automatically add image credits from Unsplash'|t }}</p>
 
 {% else %}
