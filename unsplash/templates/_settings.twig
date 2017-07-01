@@ -17,4 +17,25 @@
     errors:       settings.getErrors('assetSource')
 }) }}
 
+
+<h2>{{ 'Credits'|t }}</h2>
+{% if sourceFields|length == 1 %}
+    <p class="error">{{ 'No fields add to assets in this Assets Source.'|t }}</p>
+    <p class="error">{{ 'Add a text field or a rich text field to automatically add image credits from Unsplash'|t }}</p>
+
+{% else %}
+{{ forms.selectField({
+    first:        true,
+    label:        "Image credits field"|t,
+    required:     false,
+    id:           'creditsField',
+    name:         'creditsField',
+    instructions: "Select a text field in which the photo credits will be saved. <br>Note: images from Unsplash are free to use but if at all possible, why not include credit to the photographer?"|t,
+    value:        settings.creditsField,
+    options:      sourceFields,
+    errors:       settings.getErrors('creditsField')
+}) }}
+{% endif %}
+
+
 {% endif %}
