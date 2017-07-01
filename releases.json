@@ -1,7 +1,17 @@
 [
     {
+        "version": "1.0.0-beta",
+        "downloadUrl": "https://github.com/studioespresso/craft-unsplash/archive/1.0.0-beta.zip",
+        "date": "2017-07-01T16:00:00.000Z",
+        "notes": [
+            "[Added] Translation for nl_nl and nl_be",
+            "[Added] Option to save photo credits if the asset source has text fields assigned to it",
+            "[Fixed] Make search results interface translatable"
+        ]
+    },
+    {
         "version": "0.1",
-        "downloadUrl": "https://github.com/studioespresso/unsplash/archive/master.zip",
+        "downloadUrl": "https://github.com/studioespresso/craft-unsplash/archive/1.0.0-alpha.zip",
         "date": "2017-06-14T05:30:49.975Z",
         "notes": [
             "[Added] Initial release"
