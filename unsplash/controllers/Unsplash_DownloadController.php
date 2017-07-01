@@ -59,7 +59,7 @@ class Unsplash_DownloadController extends BaseController
 
         $saved = file_put_contents($tmp, $picture);
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
-        craft()->assets->insertFileByLocalPath($tmp, 'Photo by ' . $credit . '.jpg', $settings->assetSource, true);
+        $result = craft()->assets->insertFileByLocalPath($tmp, 'Photo by ' . $credit . '.jpg', $settings->assetSource, true);
         // Delete the file we just uploaded from the tmp dir.
         if(file_exists($tmp)) {
             unlink($tmp);
