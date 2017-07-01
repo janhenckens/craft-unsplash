@@ -96,7 +96,6 @@ class UnsplashController extends BaseController
             $data['pagination']['total_pages'] = $search->getTotalPages();
             $data['pagination']['pages'] = range(1, $search->getTotalPages());
             $data['pagination']['total_results'] = $search->getTotal();
-            $data['pagination']['base'] = craft()->urlManager->createUrl('admin/unsplash/search');
             craft()->cache->add('UnsplashSearch-' . $query . '-' . $page, array('results' => $data));
             $this->renderTemplate('Unsplash/_search', array('results' => $data));
         }
