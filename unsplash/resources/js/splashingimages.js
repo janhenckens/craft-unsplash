@@ -8,9 +8,9 @@ jQuery(document).ready(function($) {
         size            : "30%"
     });
 
-    $('a.upload').click(function(e){
+    $('a.splashing-image').click(function(e){
         var element = $(this);
-        var image = element.find('img');
+        var image = element.parent().parent().find('img.splashing-thumbnail');
         // If not saving, then proceed
         if(!element.hasClass('saving')){
             element.addClass('saving');
