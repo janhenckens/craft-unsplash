@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.0.0-beta.2",
+        "downloadUrl": "https://github.com/studioespresso/craft-unsplash/archive/1.0.0-beta.zip",
+        "date": "2017-07-20T15:00:00.000Z",
+        "notes": [
+            "[Added] Added photographer credit per Unsplash API requirements"
+        ]
+    },
+    {
         "version": "1.0.0-beta",
         "downloadUrl": "https://github.com/studioespresso/craft-unsplash/archive/1.0.0-beta.zip",
         "date": "2017-07-01T16:00:00.000Z",
