@@ -11,6 +11,7 @@ jQuery(document).ready(function($) {
     $('a.splashing-image').click(function(e){
         var element = $(this);
         var image = element.parent().parent().find('img.splashing-thumbnail');
+        var downloadIcon = element.parent().parent().find('a.credit__download');
         // If not saving, then proceed
         if(!element.hasClass('saving')){
             element.addClass('saving');
@@ -24,14 +25,17 @@ jQuery(document).ready(function($) {
                 data: payload,
                 beforeSend: function() {
                     image.LoadingOverlay("show");
+                    downloadIcon.hide();
                 },
                 success: function(response) {
                     image.LoadingOverlay("hide");
                     Craft.cp.displayNotice(Craft.t('Image saved!'));
+                    downloadIcon.show();
 
                 },
                 error: function(xhr, status, error) {
                     image.LoadingOverlay("hide");
+                    downloadIcon.show();
                     Craft.cp.displayError(Craft.t('Oops, something went wrong!'));
                 }
             });
