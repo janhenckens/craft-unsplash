@@ -1,0 +1,20 @@
+.upload {
+}
+.upload .credit {
+    margin: 0 3px 5px 0;
+}
+
+.upload .credit .credit__download {
+    float: right;
+}
+.upload .credit .credit__download img {
+    height: 15px;
+    width: 15px;
+}
+.upload .credit a.credit__author {
+    text-decoration: none;
+    color: black;
+}
+.upload a img {
+    max-width: 300px;
+}

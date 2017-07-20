@@ -1,11 +1,21 @@
 <div class="wrapper" id="splashing-images">
+    {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
     {% for image in images %}
-        {% set thumb = image.parameters.urls.thumb %}
+        {% set thumb = image.parameters.urls.small %}
         {% set download= image.parameters.links.download %}
-        {% set author = image.parameters.user.name %}
-        <a href="" class="upload" data-source="{{ download }}" data-author="{{ author }}">
-            <img class="splashing-thumbnail ms-item" src="{{ thumb }}" alt="{{ author }}">
-        </a>
+        {% set author = image.parameters.user.username %}
+        {% set profileUrl = image.parameters.user.links.html %}
+        <div class="upload">
+            <div class="image">
+            <a href="" class="splashing-image" data-source="{{ download }}" data-author="{{ author }}">
+                <img class="splashing-thumbnail ms-item" src="{{ thumb }}" alt="{{ author }}">
+            </a>
+            </div>
+            <div class="credit">
+                <a href="{{ profileUrl }}?utm_source=SplashingImages_CraftCMS" target="_blank" class="credit__author">{{ 'by'|t }} {{ author }}</a>
+                <a href="" class="credit__download splashing-image" data-source="{{ download }}" data-author="{{ author }}"><img src="{{ downloadIcon }}"  alt="{{ 'Download'|t }}"></a>
+            </div>
+        </div>
     {% endfor %}
 </div>
 <script type="text/javascript">
@@ -17,8 +27,8 @@
 {% set masonry %}
     $( document ).ready(function() {
         var $grid = jQuery('#splashing-images').masonry({
-            itemSelector: 'a.upload',
-            gutter: 5,
+            itemSelector: 'div.upload',
+            gutter: 10,
         });
         $grid.imagesLoaded().progress( function() {
             $grid.masonry('layout');
@@ -27,8 +37,9 @@
 {% endset %}
 
     {% includeJs masonry %}
+    {% includeCssResource "unsplash/css/splashingimages.css" %}
     {% includeJsResource "unsplash/js/jquery-3.2.1.min.js" %}
-    {% includeJsResource "unsplash/js/Unsplash_Script.js" %}
+    {% includeJsResource "unsplash/js/splashingimages.js" %}
     {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
     {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}
     {% includeJsResource "unsplash/js/masonry.pkgd.min.js" %}
