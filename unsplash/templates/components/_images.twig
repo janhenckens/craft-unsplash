@@ -1,7 +1,8 @@
+{% cache %}
 <div class="wrapper" id="splashing-images">
     {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
     {% for image in results.images %}
-        {% set thumb = image.parameters.urls.small %}
+        {% set thumb = image.parameters.urls.thumb %}
         {% set download= image.parameters.links.download %}
         {% set author = image.parameters.user.username %}
         {% set profileUrl = image.parameters.user.links.html %}
@@ -18,10 +19,12 @@
         </div>
     {% endfor %}
 </div>
+{% endcache %}
 <script type="text/javascript">
     window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
     window.csrfTokenValue = "{{ craft.request.getCsrfToken }}";
 </script>
+
 
 
 {% set masonry %}
