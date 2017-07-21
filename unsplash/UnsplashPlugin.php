@@ -33,7 +33,7 @@ class UnsplashPlugin extends BasePlugin
     }
 
     public function getVersion() {
-        return '1.0.0-beta';
+        return '1.0.0';
     }
 
     public function getSchemaVersion() {
@@ -85,7 +85,7 @@ class UnsplashPlugin extends BasePlugin
         foreach (craft()->assetSources->getAllSources() as $source) {
             $sourceOptions[] = array('label' => $source->name, 'value' => $source->id);
         }
-        
+
         $sourceFields[] = array('label' => '---', 'value' => "");
 
         if($settings->assetSource) {
