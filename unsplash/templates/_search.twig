@@ -14,8 +14,10 @@
 {% endset %}
 
 {% set content %}
+    {% if results.images|length %}
     <div class="wrapper" id="splashing-images">
         {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
+
         {% for image in results.images %}
             {% set thumb = image.urls.thumb %}
             {% set download= image.links.download %}
@@ -30,7 +32,6 @@
                 </div>
                 <div class="credit">
                     <a href="{{ profileUrl }}?utm_source=SplashingImages_CraftCMS" target="_blank" class="credit__author">{{ 'by'|t }} {{ author }}</a>
-                    <a href="" class="credit__download splashing-image" data-source="{{ download }}" data-author="{{ author }}"><img src="{{ downloadIcon }}"  alt="{{ 'Download'|t }}"></a>
                 </div>
             </div>
         {% endfor %}
@@ -75,4 +76,7 @@
     {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
     {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}
     {% includeJsResource "unsplash/js/masonry.pkgd.min.js" %}
+    {% else %}
+        {{ 'No results found for'|t }} <strong>{{ craft.request.getParam('q') }}</strong>.
+    {% endif %}
 {% endset %}

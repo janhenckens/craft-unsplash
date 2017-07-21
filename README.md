@@ -2,7 +2,9 @@
 
 Unsplash integration for CraftCMS
 
-![Screenshot](unsplash/resources/screenshots/screenshot_1.png)
+[![Splashing Images](unsplash/resources/screenshots/screenshot_1.png)](https://www.youtube.com/watch?v=hqMkkZQnMR0)
+(click the screenshot to see a short (screencast)[https://www.youtube.com/watch?v=hqMkkZQnMR0] on what the plugin does)
+
 
 ## Installation
 
@@ -12,7 +14,7 @@ To install Splashing Images, follow these steps:
 2. Install plugin in the Craft Control Panel under Settings > Plugins
 3. The plugin folder should be named `unsplash` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
 
-Unsplash works on Craft 2.4.x and Craft 2.5.x.
+Splashing Images works on Craft 2.4.x, 2.5.x. and 2.6.x
 
 ## Overview
 
@@ -23,7 +25,6 @@ Splashing Images for Craft brings these amazing photos to your fingertips, right
 Note: this plugin is not affiliated with unsplash.com.
 
 ## Configuration
-
 
 Before you can use Splashing Images for Craft, you have to configure at least 1 Assets source, so the plugin has a place to save your images to.
 

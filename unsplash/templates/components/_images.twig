@@ -1,7 +1,8 @@
+{% cache %}
 <div class="wrapper" id="splashing-images">
     {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
-    {% for image in images %}
-        {% set thumb = image.parameters.urls.small %}
+    {% for image in results.images %}
+        {% set thumb = image.parameters.urls.thumb %}
         {% set download= image.parameters.links.download %}
         {% set author = image.parameters.user.username %}
         {% set profileUrl = image.parameters.user.links.html %}
@@ -13,15 +14,16 @@
             </div>
             <div class="credit">
                 <a href="{{ profileUrl }}?utm_source=SplashingImages_CraftCMS" target="_blank" class="credit__author">{{ 'by'|t }} {{ author }}</a>
-                <a href="" class="credit__download splashing-image" data-source="{{ download }}" data-author="{{ author }}"><img src="{{ downloadIcon }}"  alt="{{ 'Download'|t }}"></a>
             </div>
         </div>
     {% endfor %}
 </div>
+{% endcache %}
 <script type="text/javascript">
     window.csrfTokenName = "{{ craft.config.get('csrfTokenName') }}";
     window.csrfTokenValue = "{{ craft.request.getCsrfToken }}";
 </script>
+
 
 
 {% set masonry %}
@@ -38,7 +40,6 @@
 
     {% includeJs masonry %}
     {% includeCssResource "unsplash/css/splashingimages.css" %}
-    {% includeJsResource "unsplash/js/jquery-3.2.1.min.js" %}
     {% includeJsResource "unsplash/js/splashingimages.js" %}
     {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
     {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}

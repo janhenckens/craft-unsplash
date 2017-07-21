@@ -6,6 +6,12 @@
     latest: { label: "Last Added"|t, url: url('unsplash/latest') },
     random: { label: "Random"|t, url: url('unsplash/random')},
 } %}
+{% if lastSearch is defined %}
+    {% set searchTab = {
+        lastSearch: { label: "Last search: "|t ~ lastSearch.q, url: url('unsplash/search?q=' ~ lastSearch.q)},
+    } %}
+    {% set tabs = tabs|merge(searchTab) %}
+{% endif %}
 {% set selectedTab = 'popular' %}
 
 {% set extraPageHeaderHtml %}
