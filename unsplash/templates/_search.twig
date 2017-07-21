@@ -14,8 +14,10 @@
 {% endset %}
 
 {% set content %}
+    {% if results.images|length %}
     <div class="wrapper" id="splashing-images">
         {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
+
         {% for image in results.images %}
             {% set thumb = image.urls.thumb %}
             {% set download= image.links.download %}
@@ -75,4 +77,7 @@
     {% includeJsResource "unsplash/js/loadingoverlay.min.js" %}
     {% includeJsResource "unsplash/js/imagesloaded.pkgd.min.js" %}
     {% includeJsResource "unsplash/js/masonry.pkgd.min.js" %}
+    {% else %}
+        {{ 'No results found for'|t }} <strong>{{ craft.request.getParam('q') }}</strong>.
+    {% endif %}
 {% endset %}
