@@ -39,32 +39,47 @@ class UnsplashController extends BaseController
 
     public function actionLatest() {
         $this->pluginIsConfigured();
+        $data = [];
+        if(craft()->cache->get('UnsplashSearchLast')) {
+            $data['lastSearch'] = craft()->cache->get('UnsplashSearchLast');
+        }
         if(craft()->cache->get('UnplashLatest')) {
-            $this->renderTemplate('Unsplash/_latest', craft()->cache->get('UnplashLatest'));
+            $data['results'] = craft()->cache->get('UnplashLatest');
         } else {
             $this->setup();
             $images = Photo::all($page = 1, $per_page = 25, $orderby = 'latest');
             craft()->cache->add('UnplashLatest', array('images' => $images), (60*60*12));
-            $this->renderTemplate('Unsplash/_latest', array('images' => $images));
+            $data['results'] = $images;
+
         }
+        $this->renderTemplate('Unsplash/_latest', $data);
     }
 
     public function actionIndex() {
         $this->pluginIsConfigured();
+        $data = [];
+        if(craft()->cache->get('UnsplashSearchLast')) {
+            $data['lastSearch'] = craft()->cache->get('UnsplashSearchLast');
+        }
         if(craft()->cache->get('UnsplashPopular')) {
-            $this->renderTemplate('Unsplash/_index', craft()->cache->get('UnsplashPopular'));
+            $data['results'] = craft()->cache->get('UnsplashPopular');
         } else {
             $this->setup();
             $images = Photo::curated(1, 25);
             craft()->cache->add('UnsplashPopular', array('images' => $images), (60*60*12));
-            $this->renderTemplate('Unsplash/_index', array('images' => $images));
+            $data['results'] =   array('images' => $images);
         }
+        $this->renderTemplate('Unsplash/_index', $data);
     }
 
     public function actionRandom() {
         $this->pluginIsConfigured();
+        $data = [];
+        if(craft()->cache->get('UnsplashSearchLast')) {
+            $data['lastSearch'] = craft()->cache->get('UnsplashSearchLast');
+        }
         if(craft()->cache->get('UnsplashRandom')) {
-            $this->renderTemplate('Unsplash/_random', craft()->cache->get('UnsplashRandom'));
+            $data['results'] = craft()->cache->get('UnsplashRandom');
         } else {
             $this->setup();
             $images = Photo::random(
@@ -72,9 +87,10 @@ class UnsplashController extends BaseController
                     'count' => 25
                 )
             );
-            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*10));
-            $this->renderTemplate('Unsplash/_random', array('images' => $images));
+            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60));
+            $data['results'] = $images;
         }
+        $this->renderTemplate('Unsplash/_random', $data);
     }
 
     public function actionSearch() {
@@ -86,8 +102,8 @@ class UnsplashController extends BaseController
         $query = craft()->request->getParam('q');
         $page = craft()->request->getParam('page');
 
-        if(craft()->cache->get('UnsplashSearch-' . $query . '-' . $page )) {
-            $this->renderTemplate('Unsplash/_search', craft()->cache->get('UnsplashSearch-' . $query . '-' . $page ));
+        if(craft()->cache->get('UnsplashSearchResults-' . $query . '-' . $page )) {
+            $this->renderTemplate('Unsplash/_search', craft()->cache->get('UnsplashSearchResults-' . $query . '-' . $page ));
         } else {
             $this->setup();
             $search = Search::photos($query, $page);
@@ -96,7 +112,8 @@ class UnsplashController extends BaseController
             $data['pagination']['total_pages'] = $search->getTotalPages();
             $data['pagination']['pages'] = range(1, $search->getTotalPages());
             $data['pagination']['total_results'] = $search->getTotal();
-            craft()->cache->add('UnsplashSearch-' . $query . '-' . $page, array('results' => $data));
+            craft()->cache->add('UnsplashSearchLast', array('q' => $query), (60*60));
+            craft()->cache->add('UnsplashSearchResults-' . $query . '-' . $page, array('results' => $data), (60*60*48));
             $this->renderTemplate('Unsplash/_search', array('results' => $data));
         }
     }

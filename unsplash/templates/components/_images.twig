@@ -1,6 +1,6 @@
 <div class="wrapper" id="splashing-images">
     {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
-    {% for image in images %}
+    {% for image in results.images %}
         {% set thumb = image.parameters.urls.small %}
         {% set download= image.parameters.links.download %}
         {% set author = image.parameters.user.username %}
@@ -13,7 +13,7 @@
             </div>
             <div class="credit">
                 <a href="{{ profileUrl }}?utm_source=SplashingImages_CraftCMS" target="_blank" class="credit__author">{{ 'by'|t }} {{ author }}</a>
-                <a href="" class="credit__download splashing-image" data-source="{{ download }}" data-author="{{ author }}"><img src="{{ downloadIcon }}"  alt="{{ 'Download'|t }}"></a>
+                <a href="" class="credit__download splashing-image" data-source="{{ download }}" data-author="{{ author }}"></a>
             </div>
         </div>
     {% endfor %}
