@@ -2,9 +2,9 @@
 
 Unsplash integration for CraftCMS
 
-![Screenshot](unsplash/resources/screenshots/screenshot_1.png)
+[![Splashing Images](unsplash/resources/screenshots/screenshot_1.png)](https://www.youtube.com/watch?v=hqMkkZQnMR0)
+(click the screenshot to see a short (screencast)[https://www.youtube.com/watch?v=hqMkkZQnMR0] on what the plugin does)
 
-<iframe width="760" src="https://www.youtube.com/embed/hqMkkZQnMR0" frameborder="0" allowfullscreen></iframe>
 
 ## Installation
 
