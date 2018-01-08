@@ -43,15 +43,18 @@ class UnsplashController extends BaseController
         if(craft()->cache->get('UnsplashSearchLast')) {
             $data['lastSearch'] = craft()->cache->get('UnsplashSearchLast');
         }
+
         if(craft()->cache->get('UnplashLatest')) {
             $data['results'] = craft()->cache->get('UnplashLatest');
         } else {
             $this->setup();
             $images = Photo::all($page = 1, $per_page = 25, $orderby = 'latest');
-            craft()->cache->add('UnplashLatest', array('images' => $images), (60*60*12));
-            $data['results'] = $images;
+	        $images = $this->parseResults($images);
+	        craft()->cache->add('UnplashLatest', array('images' => $images), (60*60*12));
+            $data['results'] = array('images' => $images);
 
         }
+
         $this->renderTemplate('Unsplash/_latest', $data);
     }
 
@@ -66,31 +69,11 @@ class UnsplashController extends BaseController
         } else {
             $this->setup();
             $images = Photo::curated(1, 25);
-            craft()->cache->add('UnsplashPopular', array('images' => $images), (60*60*12));
+	        $images = $this->parseResults($images);
+	        craft()->cache->add('UnsplashPopular', array('images' => $images), (60*60*12));
             $data['results'] =   array('images' => $images);
         }
         $this->renderTemplate('Unsplash/_index', $data);
-    }
-
-    public function actionRandom() {
-        $this->pluginIsConfigured();
-        $data = [];
-        if(craft()->cache->get('UnsplashSearchLast')) {
-            $data['lastSearch'] = craft()->cache->get('UnsplashSearchLast');
-        }
-        if(craft()->cache->get('UnsplashRandom')) {
-            $data['results'] = craft()->cache->get('UnsplashRandom');
-        } else {
-            $this->setup();
-            $images = Photo::random(
-                array(
-                    'count' => 25
-                )
-            );
-            craft()->cache->add('UnsplashRandom', array('images' => $images), (60*60));
-            $data['results'] = $images;
-        }
-        $this->renderTemplate('Unsplash/_random', $data);
     }
 
     public function actionSearch() {
@@ -108,7 +91,8 @@ class UnsplashController extends BaseController
             $this->setup();
             $search = Search::photos($query, $page);
             $data = [];
-            $data['images'] = $search->getResults();
+
+	        $data['images'] = $this->parseResults($search->getArrayObject());
             $data['pagination']['total_pages'] = $search->getTotalPages();
             $data['pagination']['pages'] = range(1, $search->getTotalPages());
             $data['pagination']['total_results'] = $search->getTotal();
@@ -117,6 +101,20 @@ class UnsplashController extends BaseController
             $this->renderTemplate('Unsplash/_search', array('results' => $data));
         }
     }
+
+	private function parseResults($images)
+	{
+		$data = [];
+		foreach($images as $image) {
+			$data[$image->id]['id'] = $image->id;
+			$data[$image->id]['thumb'] = $image->urls['thumb'];
+			$data[$image->id]['small'] = $image->urls['small'];
+			$data[$image->id]['full'] = $image->urls['full'];
+			$data[$image->id]['attr']['name'] = $image->user['name'];
+			$data[$image->id]['attr']['link'] = $image->user['links']['html'];
+		}
+		return $data;
+	}
 
     private function pluginIsConfigured() {
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();

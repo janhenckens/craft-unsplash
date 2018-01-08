@@ -15,44 +15,53 @@ require 'vendor/autoload.php';
 
 class UnsplashPlugin extends BasePlugin
 {
-
-    public function getName() {
-         return Craft::t('Splashing Images');
+    public function getName()
+    {
+        return Craft::t('Splashing Images');
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return Craft::t('Unsplash integration for CraftCMS');
     }
 
-    public function getDocumentationUrl() {
+    public function getDocumentationUrl()
+    {
         return 'https://github.com/studioespresso/unsplash/blob/master/README.md';
     }
 
-    public function getReleaseFeedUrl() {
+    public function getReleaseFeedUrl()
+    {
         return 'https://raw.githubusercontent.com/studioespresso/craft-unsplash/master/releases.json';
     }
 
-    public function getVersion() {
-        return '1.0.0';
+    public function getVersion()
+    {
+        return '1.1.0';
     }
 
-    public function getSchemaVersion() {
+    public function getSchemaVersion()
+    {
         return '0.1';
     }
 
-    public function getDeveloper() {
+    public function getDeveloper()
+    {
         return 'Studio Espresso';
     }
 
-    public function getDeveloperUrl() {
+    public function getDeveloperUrl()
+    {
         return 'https://studioespresso.co';
     }
 
-    public function hasCpSection() {
+    public function hasCpSection()
+    {
         return true;
     }
 
-    public function registerCpRoutes() {
+    public function registerCpRoutes()
+    {
         return array(
             'unsplash' => array( 'action' => 'Unsplash/index' ),
             'unsplash/latest' => array( 'action' => 'Unsplash/latest' ),
@@ -61,7 +70,8 @@ class UnsplashPlugin extends BasePlugin
         );
     }
 
-    protected function defineSettings() {
+    protected function defineSettings()
+    {
         return array(
             'assetSource' => array(AttributeType::String, 'label' => 'Asset Source', 'default' => ''),
             'creditsField' => array(AttributeType::String, 'label' => 'Credits Field', 'default' => ''),
@@ -69,7 +79,8 @@ class UnsplashPlugin extends BasePlugin
         );
     }
 
-    public function onAfterInstall(){
+    public function onAfterInstall()
+    {
         craft()->request->redirect(UrlHelper::getCpUrl('settings/plugins/unsplash'));
     }
 
@@ -78,7 +89,8 @@ class UnsplashPlugin extends BasePlugin
      *
      * @return mixed
      */
-    public function getSettingsHtml() {
+    public function getSettingsHtml()
+    {
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
 
         $sourceOptions[] = array('label' => '---', 'value' => "");
@@ -88,14 +100,13 @@ class UnsplashPlugin extends BasePlugin
 
         $sourceFields[] = array('label' => '---', 'value' => "");
 
-        if($settings->assetSource) {
-
+        if ($settings->assetSource) {
             $source = craft()->assetSources->getSourceById($settings->assetSource);
             $fieldLayout = craft()->fields->getLayoutById($source->getAttribute('fieldLayoutId'));
             $textFields = [ 'PlainText' , 'RichText' ];
             foreach ($fieldLayout->getFieldIds() as $field) {
                 $field = craft()->fields->getFieldById($field);
-                if(in_array($field->getFieldType()->getClassHandle(), $textFields  )) {
+                if (in_array($field->getFieldType()->getClassHandle(), $textFields)) {
                     $sourceFields[$field->getAttribute('handle')] = $field->getAttribute('name');
                 };
             }
@@ -108,8 +119,8 @@ class UnsplashPlugin extends BasePlugin
         ));
     }
 
-    public function prepSettings($settings) {
+    public function prepSettings($settings)
+    {
         return $settings;
     }
-
 }

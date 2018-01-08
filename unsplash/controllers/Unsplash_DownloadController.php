@@ -35,6 +35,11 @@ class Unsplash_DownloadController extends BaseController
 {
 
     public function actionSave() {
+	    HttpClient::init(array(
+		    'applicationId'	=> craft()->config->get('apiKey', 'Unsplash'),
+		    'utmSource' => 'SplashingImages_CraftCMS',
+	    ));
+
         if(!craft()->request->isAjaxRequest()) {
             return false;
         }
@@ -43,8 +48,11 @@ class Unsplash_DownloadController extends BaseController
         $dir = $path->getTempPath();
         if(!is_dir($dir)){ mkdir($dir); }
 
-        $payload = trim(stripslashes(craft()->request->getPost('source')));
-        $credit = craft()->request->getPost('author');
+	    $id = craft()->request->getPost('id');
+	    $credit = craft()->request->getPost('attr');
+	    $photo = Photo::find($id);
+	    $payload = $photo->download();
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $payload);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -59,22 +67,26 @@ class Unsplash_DownloadController extends BaseController
 
         $saved = file_put_contents($tmp, $picture);
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
-        $result = craft()->assets->insertFileByLocalPath($tmp, $credit . '-' .rand() . '.jpg', $settings->assetSource, true);
+	    $result = craft()->assets->insertFileByLocalPath($tmp, $credit . '-' .rand() . '.jpg', $settings->assetSource, true);
 
-        if($settings->creditsField) {
-            // Get the asset we just created
-            $savedImage = craft()->assets->getFileById($result->getDataItem('fileId'));
-            $savedImage->setContentFromPost(array(
-                $settings->creditsField => 'Photo by ' . $credit,
-            ));
-            craft()->elements->saveElement($savedImage);
-        }
+	    if($settings->creditsField) {
+		    // Get the asset we just created
+		    $savedImage = craft()->assets->getFileById($result->getDataItem('fileId'));
+		    $savedImage->setContentFromPost(array(
+			    $settings->creditsField => 'Photo by ' . $credit,
+		    ));
+		    craft()->elements->saveElement($savedImage);
+	    }
+	    $result = craft()->assets->insertFileByLocalPath($tmp, $tmpImage, $settings->assetSource, true);
 
-        // Delete the file we just uploaded from the tmp dir.
-        if(file_exists($tmp)) {
-            unlink($tmp);
-        }
-        exit;
+	    // Delete the file we just uploaded from the tmp dir.
+
+	    if(file_exists($tmp)) {
+		    unlink($tmp);
+	    }
+
+	    exit;
+
 
     }
 
