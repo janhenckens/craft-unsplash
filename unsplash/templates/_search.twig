@@ -14,24 +14,13 @@
 
 {% set content %}
     {% if results.images|length %}
-    <div class="wrapper" id="splashing-images">
+    <div id="splashing-container">
         {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
 
         {% for image in results.images %}
-            {% set thumb = image.urls.thumb %}
-            {% set download= image.links.download %}
-            {% set author = image.user.name %}
-            {% set profileUrl = image.user.links.html %}
-
-            <div class="upload">
-                <div class="image">
-                <a href="" class="splashing-image" data-source="{{ download }}" data-author="{{ author }}">
-                    <img class="splashing-thumbnail ms-item" src="{{ thumb }}" alt="{{ author }}">
-                </a>
-                </div>
-                <div class="credit">
-                    <a href="{{ profileUrl }}?utm_source=SplashingImages_CraftCMS" target="_blank" class="credit__author">{{ 'by'|t }} {{ author }}</a>
-                </div>
+            <div class="splashing" data-id="{{ image.id }}">
+                <img src="{{ image.small }}">
+                <span class="attribute"><a href="{{ image.attr.link }}">{{ image.attr.name }}</a></span>
             </div>
         {% endfor %}
     </div>
@@ -57,14 +46,14 @@
 
 
     {% set masonry %}
-        $( document ).ready(function() {
-            var $grid = jQuery('#splashing-images').masonry({
-            itemSelector: 'div.upload',
-            gutter: 10,
+        $(document).ready(function () {
+        var grid = jQuery('#splashing-container').masonry({
+        itemSelector: 'div.splashing',
+        gutter: 10,
         });
-        $grid.imagesLoaded().progress( function() {
-            $grid.masonry('layout');
-            });
+        grid.imagesLoaded().progress(function () {
+        grid.masonry();
+        });
         });
     {% endset %}
 
