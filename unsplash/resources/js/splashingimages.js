@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    var container = $('#splashing_images');
+    var container = $('#splashing-container');
     $.LoadingOverlaySetup({
         color           : "rgba(241,241,241,0.5)",
         maxSize         : "80px",
@@ -8,15 +8,16 @@ jQuery(document).ready(function($) {
         size            : "30%"
     });
 
-    $('a.splashing-image').click(function(e){
+    $('div.splashing img').click(function (e) {
         var element = $(this);
-        var image = element.parent().parent().find('img.splashing-thumbnail');
-        var downloadIcon = element.parent().parent().find('a.credit__download');
         // If not saving, then proceed
         if(!element.hasClass('saving')){
             element.addClass('saving');
-            e.preventDefault();
-            var payload = { source : $(this).data('source'), author: $(this).data('author'), credit: $(this).data('credit')};
+
+            payload = {
+                id: element.parent().data('id'),
+                attr: element.parent().data('attr'),
+            }
             payload[window.csrfTokenName] = window.csrfTokenValue;
             $.ajax({
                 type: 'POST',
@@ -24,18 +25,14 @@ jQuery(document).ready(function($) {
                 dataType: 'JSON',
                 data: payload,
                 beforeSend: function() {
-                    image.LoadingOverlay("show");
-                    downloadIcon.hide();
+                    element.LoadingOverlay("show");
                 },
                 success: function(response) {
-                    image.LoadingOverlay("hide");
+                    element.LoadingOverlay("hide");
                     Craft.cp.displayNotice(Craft.t('Image saved!'));
-                    downloadIcon.show();
-
                 },
                 error: function(xhr, status, error) {
-                    image.LoadingOverlay("hide");
-                    downloadIcon.show();
+                    element.LoadingOverlay("hide");
                     Craft.cp.displayError(Craft.t('Oops, something went wrong!'));
                 }
             });
