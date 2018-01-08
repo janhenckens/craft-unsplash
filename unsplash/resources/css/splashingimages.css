@@ -18,3 +18,20 @@
 .upload a img {
     max-width: 300px;
 }
+
+
+.splashing {
+    position: relative;
+}
+.splashing span.attribute {
+    background-color: #0D3349;
+    width: 100%;
+}
+.splashing span.attribute a {
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+    color: white;
+    padding: 3px 5px 3px 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
