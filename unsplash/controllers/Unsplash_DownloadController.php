@@ -75,9 +75,9 @@ class Unsplash_DownloadController extends BaseController
 		    $savedImage->setContentFromPost(array(
 			    $settings->creditsField => 'Photo by ' . $credit,
 		    ));
-		    craft()->elements->saveElement($savedImage);
+		    $result = craft()->elements->saveElement($savedImage);
+
 	    }
-	    $result = craft()->assets->insertFileByLocalPath($tmp, $tmpImage, $settings->assetSource, true);
 
 	    // Delete the file we just uploaded from the tmp dir.
 
