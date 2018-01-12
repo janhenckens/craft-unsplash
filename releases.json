@@ -14,7 +14,7 @@
         "date": "2018-01-08T22:00:00.000Z",
         "notes": [
             "[Added] Translation for nl_nl and nl_be",
-            "[Improved] Updated unsplash-php to 2.4.1"
+            "[Improved] Updated unsplash-php to 2.4.1",
             "[Improved] Cleaner attribution links",
             "[Fixed] Removed the 'random' tab",
         ]
