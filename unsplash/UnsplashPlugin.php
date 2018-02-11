@@ -37,7 +37,7 @@ class UnsplashPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '1.1.1';
+        return '1.2.0';
     }
 
     public function getSchemaVersion()
@@ -74,6 +74,7 @@ class UnsplashPlugin extends BasePlugin
     {
         return array(
             'assetSource' => array(AttributeType::String, 'label' => 'Asset Source', 'default' => ''),
+            'assetFolder' => array(AttributeType::String, 'label' => 'Asset Folder', 'default' => ''),
             'creditsField' => array(AttributeType::String, 'label' => 'Credits Field', 'default' => ''),
 
         );
@@ -121,6 +122,10 @@ class UnsplashPlugin extends BasePlugin
 
     public function prepSettings($settings)
     {
+    	if($settings['assetFolder']) {
+    	    $assetService = craft()->assets;
+    	    $assetService->createFolder($settings['assetSource'], $settings['assetFolder']);
+	    }
         return $settings;
     }
 }

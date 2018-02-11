@@ -5,17 +5,33 @@
 <p class="error">{{ 'No sources exist yet.'|t }}</p>
 
 {% else %}
-{{ forms.selectField({
-    first:        true,
-    label:        "Save images in"|t,
-    required:     true,
-    id:           'assetSource',
-    name:         'assetSource',
-    instructions: "Select the asset source in which you want to save your images"|t,
-    value:        settings.assetSource,
-    options:      assetSources,
-    errors:       settings.getErrors('assetSource')
-}) }}
+    <div class="field">
+        <div class="heading">
+            <label>{{ 'Save images in'|t }}</label>
+            <div class="instructions"><p>{{ 'Select the asset source in which you want to save your images'|t }}</p>
+            </div>
+        </div>
+        <div class="input ltr">
+            <div class="flex">
+                <div>
+                    <div class="select">
+                        <select id="assetSource" name="assetSource">
+                            {% for volume in assetSources %}
+                                <option value="{{ volume.value }}"
+                                        {% if settings['assetSource'] == volume.value %}selected{% endif %}>{{ volume.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+                <div class="flex-grow">
+                    <input class="text ltr fullwidth" type="text" id="assetFolder" name="assetFolder" value="{{ settings['assetFolder'] }}"
+                           autocomplete="off" placeholder="path/to/subfolder">
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
 <h2>{{ 'Credits'|t }}</h2>
