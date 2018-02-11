@@ -122,6 +122,10 @@ class UnsplashPlugin extends BasePlugin
 
     public function prepSettings($settings)
     {
+    	if($settings['assetFolder']) {
+    	    $assetService = craft()->assets;
+    	    $assetService->createFolder($settings['assetSource'], $settings['assetFolder']);
+	    }
         return $settings;
     }
 }
