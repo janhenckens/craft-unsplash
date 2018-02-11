@@ -5,6 +5,7 @@
         "date": "2018-02-11T120:00:00.000Z",
         "notes": [
             "[Fixed] Plugin now accounts for the cpTrigger setting for all urls",
+            "[Added] Added the option to save images to a predefined subfolder"
         ]
     },
     {
