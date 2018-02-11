@@ -74,6 +74,7 @@ class UnsplashPlugin extends BasePlugin
     {
         return array(
             'assetSource' => array(AttributeType::String, 'label' => 'Asset Source', 'default' => ''),
+            'assetFolder' => array(AttributeType::String, 'label' => 'Asset Folder', 'default' => ''),
             'creditsField' => array(AttributeType::String, 'label' => 'Credits Field', 'default' => ''),
 
         );
