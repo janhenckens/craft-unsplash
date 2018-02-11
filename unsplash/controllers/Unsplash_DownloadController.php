@@ -67,8 +67,16 @@ class Unsplash_DownloadController extends BaseController
 
         $saved = file_put_contents($tmp, $picture);
         $settings = craft()->plugins->getPlugin('Unsplash')->getSettings();
-	    $assets = craft()->assets->getRootFolderBySourceId($settings->assetSource);
-	    $result = craft()->assets->insertFileByLocalPath($tmp, $credit . '-' .rand() . '.jpg', $assets->id, true);
+        if($settings->assetFolder) {
+        	$criteria = new FolderCriteriaModel();
+        	$criteria->name = $settings->assetFolder;
+        	$criteria->sourceId = $settings->assetSource;
+			$assetSource = craft()->assets->findFolder($criteria);
+        } else {
+ 	        $assetSource = craft()->assets->getRootFolderBySourceId($settings->assetSource);
+        }
+
+	    $result = craft()->assets->insertFileByLocalPath($tmp, $credit . '-' .rand() . '.jpg', $assetSource->id, true);
 
 	    if($settings->creditsField) {
 		    // Get the asset we just created
