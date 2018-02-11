@@ -13,6 +13,7 @@
 {% endset %}
 
 {% set content %}
+    {% set pluginUrl = '/' ~ craft.config.get('cpTrigger') ~ '/unsplash' %}
     {% if results.images|length %}
     <div id="splashing-container">
         {% set downloadIcon = resourceUrl('unsplash/download.svg') %}
@@ -30,13 +31,13 @@
     {% set currentPage =  craft.request.getParam('page') %}
     {% if currentPage != 1 %}
 
-    <a href="{{ url('/admin/unsplash/search', { 'q' : craft.request.getParam('q'), 'page' : '1'}) }}">{{ 'First'|t }}</a> |
-    <a href="{{ url('/admin/unsplash/search', { 'q' : craft.request.getParam('q'), 'page' : currentPage-1}) }}">{{ 'Previous'|t }}</a> |
+    <a href="{{ url(pluginUrl~'/search', { 'q' : craft.request.getParam('q'), 'page' : '1'}) }}">{{ 'First'|t }}</a> |
+    <a href="{{ url(pluginUrl~'/search', { 'q' : craft.request.getParam('q'), 'page' : currentPage-1}) }}">{{ 'Previous'|t }}</a> |
     {% endif %}
     {{ 'Page'|t }} {{ currentPage }}
     {% if currentPage != results.pagination.total_pages %}
-    | <a href="{{ url('/admin/unsplash/search', { 'q' : craft.request.getParam('q'), 'page' : currentPage+1}) }}">{{ 'Next'|t }}</a> |
-    <a href="{{ url('/admin/unsplash/search', { 'q' : craft.request.getParam('q'), 'page' : results.pagination.total_pages }) }}">{{ 'Last'|t }}</a>
+    | <a href="{{ url(pluginUrl~'/search', { 'q' : craft.request.getParam('q'), 'page' : currentPage+1}) }}">{{ 'Next'|t }}</a> |
+    <a href="{{ url(pluginUrl~'/search', { 'q' : craft.request.getParam('q'), 'page' : results.pagination.total_pages }) }}">{{ 'Last'|t }}</a>
     {% endif %}
 
     <script type="text/javascript">
