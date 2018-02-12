@@ -124,7 +124,8 @@ class UnsplashPlugin extends BasePlugin
     {
     	if($settings['assetFolder']) {
     	    $assetService = craft()->assets;
-    	    $assetService->createFolder($settings['assetSource'], $settings['assetFolder']);
+    	    $rootFolder = craft()->assets->getRootFolderBySourceId($settings['assetSource']);
+    	    $assetService->createFolder($rootFolder->id, $settings['assetFolder']);
 	    }
         return $settings;
     }
